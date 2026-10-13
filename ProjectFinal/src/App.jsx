@@ -48,6 +48,7 @@ function App() {
   const [reservationOpen, setReservationOpen] = useState(false)
   const [minDate, setMinDate] = useState('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [darkMode, setDarkMode] = useState(false)
   const [reservation, setReservation] = useState(null)
   const [orderPlaced, setOrderPlaced] = useState(false)
   const [newsletterStatus, setNewsletterStatus] = useState('')
@@ -211,7 +212,7 @@ function App() {
   }
 
   return (
-    <main className="restaurant" aria-busy={isLoading}>
+    <main className={`restaurant ${darkMode ? 'is-dark' : ''}`} aria-busy={isLoading}>
       {isLoading && <div className="loading-screen" role="status" aria-label={`Loading Olio Cucina, ${loadingProgress}%`}>
         <div className="loading-content">
           <span className="loading-mark" aria-hidden="true">✳</span>
@@ -231,6 +232,10 @@ function App() {
           <a href="/story" aria-current={currentPage === 'story' ? 'page' : undefined} onClick={(event) => { event.preventDefault(); goTo('story') }}>Our story</a>
           <a href="/visit" aria-current={currentPage === 'visit' ? 'page' : undefined} onClick={(event) => { event.preventDefault(); goTo('visit') }}>Find us</a>
           <a href="/contact" aria-current={currentPage === 'contact' ? 'page' : undefined} onClick={(event) => { event.preventDefault(); goTo('contact') }}>Contact</a>
+          <button className="theme-toggle" type="button" aria-label={`Switch to ${darkMode ? 'light' : 'dark'} mode`} aria-pressed={darkMode} onClick={() => setDarkMode((enabled) => !enabled)}>
+            <span key={darkMode ? 'sun' : 'moon'} className="theme-toggle-icon" aria-hidden="true">{darkMode ? '☀' : '☾'}</span>
+            <span className="theme-toggle-label">{darkMode ? 'Light mode' : 'Dark mode'}</span>
+          </button>
           <button className="mobile-reserve" onClick={() => { setMobileMenuOpen(false); openReservation() }}>Book a table <span>↗</span></button>
         </nav>
         <button className="basket-button" onClick={() => setBasketOpen(true)} aria-label={`Open order, ${basketCount} items`}>Your order <span>{basketCount}</span></button>
